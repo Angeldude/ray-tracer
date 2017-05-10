@@ -23,6 +23,9 @@ class Ray(r0:Point3D, rD:Point3D){
     r0 `+` (rD `*` t)
   }
 }
+
+
+
 val point = new Point3D(0,0,0)
 val dir = new Point3D(2,3,1)
 val ray = new Ray(point, dir)
