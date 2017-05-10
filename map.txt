@@ -1,0 +1,15 @@
+3
+0 Halsell 228
+    You are standing in a room full of computers and comfy chairs with a giant air conditioning unit hanging from the ceiling.  While the surroundings are serine enough, you can't help feeling a certain amount of dread. This isn't just a fear that the air conditioning unit is going to fall either. Something in you tells you that this room is regularly used for strange rituals involving torture. You can only wonder what happens here and why there isn't blood all over the place. Your uneasyness makes you want to leave quickly.
+1
+east 1
+1 Halsell 2nd Hallway
+	This is a long dark hallway with rough carpet and multiple doors leading out.  The dispair of lost souls hangs heavily in the air.
+2
+west 0
+east 2
+2 CS Office
+	You stand in the main office of the Computer Science Department at Trinity University.  An overwhelming evil fills the room.  It appears to come from one of the many side offices.  Looking at the door you see it says 201K.  You feel an overwhelming desire to flee this place before work is heaped upon you.
+1
+west 1
+
