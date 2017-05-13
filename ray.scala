@@ -31,7 +31,7 @@ class Ray(val r0:Point3D, val rD:Vector[Double]){
 // plane: r(t)* n = d
 class Plane(n:Vector[Double], d:Double){
   def intersectPlane(r:Ray) = {
-    val denominator = d*n(0) + d*n(1) + d*n(2)
+    val denominator = r.rD(0) * n(0) + r.rD(1) * n(1) + r.rD(2) * n(2)
     val numerator =  d - (r.r0 `*` n)
     if(denominator == 0)
       "Ray is parallel to plane,\nNo intersection"
@@ -40,38 +40,46 @@ class Plane(n:Vector[Double], d:Double){
     else {
       val t = numerator/denominator
       val point = r.r(t)
-      "There is intersection at t = " + t.toString + "\n" +
-      "Giving us the point at " + (point.x.floatValue, point.y.floatValue, point.z.floatValue)
-    }
+      // if(point `*` n == d){
+        "There is intersection at t = " + t.toString + "\n" +
+        "Giving us the point at " + (point.x.floatValue, point.y.floatValue, point.z.floatValue)
+      // }
+      // else
+      //   "There is no intersection"
+      }
    }
 }
 
-println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
-val x0 = readDouble()
-val y0 = readDouble()
-val z0 = readDouble()
+val ray = new Ray(new Point3D(0,0,0), Vector(1,1,1))
+val plane = new Plane(Vector(1,2,3), 6)
+println(plane.intersectPlane(ray))
 
-println("Now enter a direction vector for that ray, also 3 numbers: ")
-val xD = readDouble()
-val yD = readDouble()
-val zD = readDouble()
-
-val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
-
-println("Do you want to test for intersection of a sphere or a plane?")
-val check = readLine()
-if(check == "sphere")
-  println("coming soon")
-else if(check == "plane"){
-  println("We'll need 4 numbers for the plane:\n" +
-"the normal vector (3 numbers), and the distance: ")
-  val pX = readDouble()
-  val pY = readDouble()
-  val pZ = readDouble()
-  val pD = readDouble()
-
-  val plane = new Plane(Vector(pX,pY,pZ), pD)
-  println(plane.intersectPlane(ray))
-}
-else
- println("That wasn't an option. Goodbye.")
+// println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
+// val x0 = readDouble()
+// val y0 = readDouble()
+// val z0 = readDouble()
+//
+// println("Now enter a direction vector for that ray, also 3 numbers: ")
+// val xD = readDouble()
+// val yD = readDouble()
+// val zD = readDouble()
+//
+// val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
+//
+// println("Do you want to test for intersection of a sphere or a plane?")
+// val check = readLine()
+// if(check == "sphere")
+//   println("coming soon")
+// else if(check == "plane"){
+//   println("We'll need 4 numbers for the plane:\n" +
+// "the normal vector (3 numbers), and the distance: ")
+//   val pX = readDouble()
+//   val pY = readDouble()
+//   val pZ = readDouble()
+//   val pD = readDouble()
+//
+//   val plane = new Plane(Vector(pX,pY,pZ), pD)
+//   println(plane.intersectPlane(ray))
+// }
+// else
+//  println("That wasn't an option. Goodbye.")
