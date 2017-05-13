@@ -37,7 +37,6 @@ class Plane(n:Vector[Double], d:Double){
       "Ray is parallel to plane,\nNo intersection"
     else if(numerator/denominator  < 0)
       "t is out of range, no intersection"
-
     else {
       val t = numerator/denominator
       val point = r.r(t)
