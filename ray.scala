@@ -40,12 +40,8 @@ class Plane(n:Vector[Double], d:Double){
     else {
       val t = numerator/denominator
       val point = r.r(t)
-      // if(point `*` n == d){
         "There is intersection at t = " + t.toString + "\n" +
         "Giving us the point at " + (point.x.floatValue, point.y.floatValue, point.z.floatValue)
-      // }
-      // else
-      //   "There is no intersection"
       }
    }
 }
