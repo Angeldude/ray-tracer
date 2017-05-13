@@ -19,32 +19,36 @@ class Point3D(val x:Double, val y:Double, val z:Double){
 }
 
 class Ray(r0:Point3D, rD:Vector[Double]){
-  def r(t:Int) = {
+  def r(t:Double) = {
     r0 `+` (rD.map(n => n * t))
   }
 
-  def normal(t:Int) = {
+  def normal(t:Double) = {
     val squared = math.pow(rD(0), 2) + math.pow(rD(1), 2) + math.pow(rD(2),2)
     val root = math.sqrt(squared)
     val newVector = Vector(rD(0)/root, rD(1)/root, rD(2)/root)
     r0 `+` (newVector.map(n => n * t))
   }
 
-  def intersectPlane(p:Plane, t:Int) = {
-    r(t) `*` p.n  == p.d
-  }
+  def intersectPlane(p:Plane) = {
+    val denominator = p.d*p.n(0) + p.d*p.n(1) + p.d*p.n(2)
+    val numerator =  p.d - (r0 `*` p.n)
+    if(denominator == 0)
+      "No intersection"
+    else if(numerator/denominator  < 0){
+      "t is out of range, no intersection"
+    }
+    else
+      "There is intersection at t = " + (numerator/denominator).toString
+   }
 }
 
-class Plane(val n:Vector[Double], val d:Int)
+class Plane(val n:Vector[Double], val d:Double)
 
 val r0 = new Point3D(3,2,5)
 val rD = Vector(4,3,2.0)
 
 val ray = new Ray(r0, rD)
 
-val p = new Plane(Vector(1,1,1), 10)
-
-for(c <- 0 to 10){
-  var temp = ray.intersectPlane(p,c)
-  println(temp)
-}
+val p = new Plane(Vector(1,1,1), 21)
+println(ray.intersectPlane(p))
