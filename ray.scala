@@ -5,12 +5,20 @@ import io.StdIn._
 */
 
 class Point3D(val x:Double, val y:Double, val z:Double){
-  def `+`(num: Vector[Double])={
+  def `+`(num: Vector[Double]) = {
     new Point3D(x+num(0), y+num(1), z+num(2))
   }
 
-  def `*`(dot:Vector[Double])={
+  def `-`(num:Vector[Double]) = {
+    new Point3D(x-num(0), y-num(1), z-num(2))
+  }
+
+  def `*`(dot:Vector[Double]) = {
     x*dot(0) + y*dot(1) + z*dot(2)
+  }
+
+  def normal(point:Point3D) = {
+    Vector(x-point.x, y-point.y, z-point.z)
   }
 }
 
@@ -20,10 +28,14 @@ class Ray(val r0:Point3D, val rD:Vector[Double]){
     r0 `+` (rD.map(n => n * t))
   }
 
+  def magnitude = {
+    val squared = rD.map(i => math.pow(i,2)).sum
+    math.sqrt(squared)
+  }
+
   def normalize(t:Double) = {
-    val squared = math.pow(rD(0), 2) + math.pow(rD(1), 2) + math.pow(rD(2),2)
-    val root = math.sqrt(squared)
-    val newVector = Vector(rD(0)/root, rD(1)/root, rD(2)/root)
+    val root = magnitude
+    val newVector = rD.map(i => i/root)
     r0 `+` (newVector.map(n => n * t))
   }
 }
@@ -31,7 +43,7 @@ class Ray(val r0:Point3D, val rD:Vector[Double]){
 // plane: r(t)* n = d
 class Plane(n:Vector[Double], d:Double){
   def intersectPlane(r:Ray) = {
-    val denominator = r.rD(0) * n(0) + r.rD(1) * n(1) + r.rD(2) * n(2)
+    val denominator = r.rD.zip(n).map(i => i._1 * i._2).sum
     val numerator =  d - (r.r0 `*` n)
     if(denominator == 0)
       "Ray is parallel to plane,\nNo intersection"
@@ -44,6 +56,12 @@ class Plane(n:Vector[Double], d:Double){
         "Giving us the point at " + (point.x.floatValue, point.y.floatValue, point.z.floatValue)
       }
    }
+}
+
+class Sphere(center:Point3D, radius:Double){
+  def surfaceN(ray:Ray) = {
+    center.normal(ray.r0)
+  }
 }
 
 val ray = new Ray(new Point3D(0,0,0), Vector(1,1,1))
