@@ -73,8 +73,8 @@ class Sphere(center:Point3D, radius:Double){
     if(delta < 0)
       "There is no intersection."
     else {
-      val t0 = (-b - math.sqrt(delta))/2*a
-      val t1 = (-b + math.sqrt(delta))/2*a
+      val t0 = (-b - math.sqrt(delta))/(2*a)
+      val t1 = (-b + math.sqrt(delta))/(2*a)
       val t = Vector(t0,t1).min
       val point = ray.r(t)
       "There is an intersection at t = " + t.toString + "\n" +
@@ -85,7 +85,7 @@ class Sphere(center:Point3D, radius:Double){
 
 val ray = new Ray(new Point3D(1,2,2), Vector(1,1,1))
 // val plane = new Plane(Vector(1,2,3), 6)
-val sphere = new Sphere(new Point3D(6,7,7), 0.5)
+val sphere = new Sphere(new Point3D(6,7,7), 1)
 // println(plane.intersectPlane(ray))
 println(sphere.intersectSphere(ray))
 
