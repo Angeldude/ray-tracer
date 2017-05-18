@@ -84,7 +84,7 @@ class Sphere(center:Point3D, radius:Double){
 
   private def calculate ={
     val rayVector = Vector(ray.r0.x, ray.r0.y, ray.r0.z)
-    
+
     val raySum = rayVector.map(i => math.pow(i,2)).sum
 
     val centerSum = Vector(center.x, center.y, center.z).map(i => math.pow(i,2)).sum
@@ -106,38 +106,17 @@ class Sphere(center:Point3D, radius:Double){
   }
 }
 
-val ray = new Ray(new Point3D(1,2,2), Vector(1,1,1))
 val plane = new Plane(Vector(1,2,3), 6)
 val sphere = new Sphere(new Point3D(6,7,7), 1)
-println(ray.r(sphere.tSphere(ray)))
-println(ray.r(plane.tPlane(ray)))
 
-// println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
-// val x0 = readDouble()
-// val y0 = readDouble()
-// val z0 = readDouble()
-//
-// println("Now enter a direction vector for that ray, also 3 numbers: ")
-// val xD = readDouble()
-// val yD = readDouble()
-// val zD = readDouble()
-//
-// val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
-//
-// println("Do you want to test for intersection of a sphere or a plane?")
-// val check = readLine()
-// if(check == "sphere")
-//   println("coming soon")
-// else if(check == "plane"){
-//   println("We'll need 4 numbers for the plane:\n" +
-// "the normal vector (3 numbers), and the distance: ")
-//   val pX = readDouble()
-//   val pY = readDouble()
-//   val pZ = readDouble()
-//   val pD = readDouble()
-//
-//   val plane = new Plane(Vector(pX,pY,pZ), pD)
-//   println(plane.intersectPlane(ray))
-// }
-// else
-//  println("That wasn't an option. Goodbye.")
+println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
+val x0 = readDouble()
+val y0 = readDouble()
+val z0 = readDouble()
+
+println("Now enter a direction vector for that ray, also 3 numbers: ")
+val xD = readDouble()
+val yD = readDouble()
+val zD = readDouble()
+
+val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
