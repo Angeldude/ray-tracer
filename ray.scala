@@ -84,16 +84,16 @@ class Sphere(center:Point3D, radius:Double){
 
   private def calculate ={
     val rayVector = Vector(ray.r0.x, ray.r0.y, ray.r0.z)
+    
+    val raySum = rayVector.map(i => math.pow(i,2)).sum
 
-    val centerVector = Vector(center.x, center.y, center.z)
+    val centerSum = Vector(center.x, center.y, center.z).map(i => math.pow(i,2)).sum
 
     val a = ray.rD.map(i => math.pow(i,2)).sum
 
     val b = ray.rD.zip(eVector(ray)).map(i => 2 * i._1 * i._2).sum
 
-    val c = centerVector.map(i => math.pow(i,2)).sum +
-    rayVector.map(i => math.pow(i,2)).sum +
-    (-2 * (center `*` rayVector)) - math.pow(radius,2)
+    val c = centerSum + raySum + (-2 * (center `*` rayVector)) - math.pow(radius,2)
 
     (b*b - (4 * a * c), a, b)
   }
