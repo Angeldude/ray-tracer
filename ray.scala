@@ -6,7 +6,6 @@ class Point3D(val x:Double, val y:Double, val z:Double){
     val yF = y.floatValue
     val zF = z.floatValue
     s"($xF, $yF, $zF)"
-
   }
 
   def `+`(num: Vector[Double]) = {
