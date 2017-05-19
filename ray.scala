@@ -1,5 +1,7 @@
 import io.StdIn._
 
+class Geometry
+
 class Point3D(val x:Double, val y:Double, val z:Double){
   override def toString = {
     val xF = x.floatValue
@@ -44,7 +46,7 @@ class Ray(val r0:Point3D, val rD:Vector[Double]){
 }
 
 // plane: r(t)* n = d
-class Plane(n:Vector[Double], d:Double){
+class Plane(n:Vector[Double], d:Double) extends Geometry{
   def tPlane(r:Ray) = {
     val ratio = fraction(r)
 
@@ -62,13 +64,13 @@ class Plane(n:Vector[Double], d:Double){
 }
 
 // sphere: (r(t)-n)*(r(t)-n) = radius^2
-class Sphere(center:Point3D, radius:Double){
+class Sphere(center:Point3D, radius:Double) extends Geometry{
   def eVector(ray:Ray) = {
     center.sub(ray.r0)
   }
 
   def tSphere(ray:Ray) = {
-    val calculated = calculate
+    val calculated = calculate(ray)
     val delta = calculated._1
     val a = calculated._2
     val b = calculated._3
@@ -82,7 +84,7 @@ class Sphere(center:Point3D, radius:Double){
     }
   }
 
-  private def calculate ={
+  private def calculate(ray:Ray) ={
     val rayVector = Vector(ray.r0.x, ray.r0.y, ray.r0.z)
 
     val raySum = rayVector.map(i => math.pow(i,2)).sum
@@ -106,17 +108,26 @@ class Sphere(center:Point3D, radius:Double){
   }
 }
 
+def firstHit(ray:Ray, geom:Vector[Geometry]):String = {
+  "does this work?"
+}
+
 val plane = new Plane(Vector(1,2,3), 6)
 val sphere = new Sphere(new Point3D(6,7,7), 1)
 
-println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
-val x0 = readDouble()
-val y0 = readDouble()
-val z0 = readDouble()
+val geometries = Vector(sphere, plane)
+val r = new Ray(new Point3D(1,2,3), Vector(1,2,3))
+//
+// println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
+// val x0 = readDouble()
+// val y0 = readDouble()
+// val z0 = readDouble()
+//
+// println("Now enter a direction vector for that ray, also 3 numbers: ")
+// val xD = readDouble()
+// val yD = readDouble()
+// val zD = readDouble()
+//
+// val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
 
-println("Now enter a direction vector for that ray, also 3 numbers: ")
-val xD = readDouble()
-val yD = readDouble()
-val zD = readDouble()
-
-val ray = new Ray(new Point3D(x0,y0,z0), Vector(xD, yD, zD))
+println(firstHit(r, geometries))
