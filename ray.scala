@@ -1,6 +1,8 @@
 import io.StdIn._
 
-class Geometry
+abstract class Geometry{
+  def intersect(r:Ray):Double
+}
 
 class Point3D(val x:Double, val y:Double, val z:Double){
   override def toString = {
@@ -47,7 +49,9 @@ class Ray(val r0:Point3D, val rD:Vector[Double]){
 
 // plane: r(t)* n = d
 class Plane(n:Vector[Double], d:Double) extends Geometry{
-  def tPlane(r:Ray) = {
+  override def toString = "Plane"
+
+  def intersect(r:Ray) = {
     val ratio = fraction(r)
 
     if(ratio._2 == 0)
@@ -65,11 +69,10 @@ class Plane(n:Vector[Double], d:Double) extends Geometry{
 
 // sphere: (r(t)-n)*(r(t)-n) = radius^2
 class Sphere(center:Point3D, radius:Double) extends Geometry{
-  def eVector(ray:Ray) = {
-    center.sub(ray.r0)
-  }
 
-  def tSphere(ray:Ray) = {
+  override def toString = "Sphere"
+
+  def intersect(ray:Ray) = {
     val calculated = calculate(ray)
     val delta = calculated._1
     val a = calculated._2
@@ -82,6 +85,10 @@ class Sphere(center:Point3D, radius:Double) extends Geometry{
       val t1 = quadratic("add", a, b, delta)
       Vector(t0,t1).min
     }
+  }
+
+  private def eVector(ray:Ray) = {
+    center.sub(ray.r0)
   }
 
   private def calculate(ray:Ray) ={
@@ -108,15 +115,21 @@ class Sphere(center:Point3D, radius:Double) extends Geometry{
   }
 }
 
-def firstHit(ray:Ray, geom:Vector[Geometry]):String = {
-  "does this work?"
+def firstHit(ray:Ray, geom:Vector[Geometry]) = {
+   val res = geom.map(g => (g, g.intersect(ray))).filter(g => g._2 > 0)
+   if(res.isEmpty)
+     ("No hit")
+   else{
+     val hit = res.reduce((prev,curr) => if(prev._2 < curr._2) prev else curr)
+    (hit._1, hit._2, ray.r(hit._2))
+   }
 }
 
-val plane = new Plane(Vector(1,2,3), 6)
+val plane = new Plane(Vector(1,4,4), 31)
 val sphere = new Sphere(new Point3D(6,7,7), 1)
 
 val geometries = Vector(sphere, plane)
-val r = new Ray(new Point3D(1,2,3), Vector(1,2,3))
+val r = new Ray(new Point3D(1,2,2), Vector(1,1,1))
 //
 // println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
 // val x0 = readDouble()
