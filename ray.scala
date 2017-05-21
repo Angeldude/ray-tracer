@@ -121,15 +121,17 @@ def firstHit(ray:Ray, geom:Vector[Geometry]) = {
      ("No hit")
    else{
      val hit = res.reduce((prev,curr) => if(prev._2 < curr._2) prev else curr)
-    (hit._1, hit._2, ray.r(hit._2))
+    (hit._1, hit._2.floatValue, ray.r(hit._2))
    }
 }
 
 val plane = new Plane(Vector(1,4,4), 31)
 val sphere = new Sphere(new Point3D(6,7,7), 1)
+val sphere2 = new Sphere(new Point3D(3,-1, 0), 4)
+val plane2 = new Plane(Vector(5,2,3), 10)
 
-val geometries = Vector(sphere, plane)
-val r = new Ray(new Point3D(1,2,2), Vector(1,1,1))
+val geometries = Vector(sphere, plane2, plane, sphere2)
+val r = new Ray(new Point3D(-4,2,6), Vector(0,4,1))
 //
 // println("Enter 3 numbers, new line each, to represent the start point of\na Ray: ")
 // val x0 = readDouble()
