@@ -2,7 +2,9 @@
 
 Working on a ray tracer in Scala.
 
-Update: Sphere intersection now works as expected.
+Update: Created function to detect first in a list of geometries
+
+0.0.4: Sphere intersection now works as expected.
 
 0.0.3: Added sphere class and sphere intersection test. It appears to work but the intersection points are extremely large for some reason.
 
